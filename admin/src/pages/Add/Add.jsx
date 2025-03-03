@@ -6,9 +6,8 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 
 
-const Add = () => {
+const Add = ({url}) => {
 
-  const url = "http://localhost:4000"
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name:"",
@@ -55,7 +54,7 @@ const Add = () => {
           <label htmlFor="image">
             <img src={image?URL.createObjectURL(image):assets.upload_area} alt=""/>
           </label>
-          <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" hidden required />
+          <input onChange={(e)=>setImage(e.target.files[0])} type="file" id="image" required hidden/>
         </div>
         <div className="add-product-name flex-col">
           <p>Product Name</p>
