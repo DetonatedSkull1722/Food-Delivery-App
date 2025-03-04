@@ -10,19 +10,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 //placing frontend order
 const placeOrder = async (req,res)=>{
 
-    const frontend_rul = "https://localhost:5173";
+    const frontend_url = "https://localhost:5173";
     
     try {
         const newOrder = new orderModel({
             userId:req.body.userId,
             items:req.body.items,
-            amount:req.body.amout,
+            amount:req.body.amount,
             address:req.body.address
         })
         await newOrder.save();
         await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}});
 
-        const line_items = req.body.items.map(()=>({
+        const line_items = req.body.items.map((item)=>({
             price_data:{
                 currency:"usd",
                 product_data:{
@@ -45,10 +45,10 @@ const placeOrder = async (req,res)=>{
         })
 
         const session = await stripe.checkout.sessions.create({
-            line_items: ine_items,
+            line_items: line_items,
             mode:'payment',
-            success_url:`${frontend_rul}/verify?success=true&orderid=${newOrder._id}`,
-            cancel_url:`${frontend_rul}/verify?success=false&orderid=${newOrder._id}`
+            success_url:`${frontend_url}/verify?success=true&orderid=${newOrder._id}`,
+            cancel_url:`${frontend_url}/verify?success=false&orderid=${newOrder._id}`
         })
 
         res.json({success:true, session_url:session.url})
