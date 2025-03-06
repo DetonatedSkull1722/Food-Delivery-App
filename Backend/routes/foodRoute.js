@@ -2,7 +2,7 @@
 import express from "express";
 import { addFood, listFood, removeFood } from "../controllers/foodController.js";
 import multer from "multer";
-import { bucket } from "../config/firebaseConfig.js";
+import { bucket } from "../firebaseConfig.js";
 
 const foodRouter = express.Router();
 
