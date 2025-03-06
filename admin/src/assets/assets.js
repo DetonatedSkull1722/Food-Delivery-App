@@ -16,4 +16,4 @@ export const assets = {
     parcel_icon
 }
 
-export const url = process.env.BACKEND_URL;
+export const url = process.env.VITE_BACKEND_URL;

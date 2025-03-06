@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const App = () => {
-  const url = process.env.BACKEND_URL;
+  const url = process.env.VITE_BACKEND_URL;
   return (
     <div>
       <ToastContainer />
