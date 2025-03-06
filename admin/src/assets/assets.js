@@ -16,4 +16,4 @@ export const assets = {
     parcel_icon
 }
 
-export const url = ProcessingInstruction
+export const url = process.env.BACKEND_URL;
