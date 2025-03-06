@@ -24,7 +24,7 @@ const addFood = async (req, res) => {
 
 const listFood = async (req, res) => {
   try {
-    const food = await foodModel.find();
+    const food = await foodModel.find({});
     res.json({ success: true, data: food });
   } catch (error) {
     console.log(error);
@@ -41,7 +41,8 @@ const removeFood = async (req, res) => {
     // Remove image from Firebase Storage
     // Extract file name from the URL (the part after the last '/')
     const filename = food.image.split("/").pop();
-    const { bucket } = await import("../config/firebaseConfig.js"); // lazy import if needed
+    console.log(filename);
+    const { bucket } = await import("../firebaseConfig.js"); // lazy import if needed
 
     await bucket.file(filename).delete();
 

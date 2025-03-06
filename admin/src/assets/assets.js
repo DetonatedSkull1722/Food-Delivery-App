@@ -14,4 +14,4 @@ export const assets = {
     parcel_icon
 }
 
-export const url = 'http://localhost:4000'
+export const url = 'https://food-delivery-k3wabqizo-detonatedskull1722s-projects.vercel.app'
