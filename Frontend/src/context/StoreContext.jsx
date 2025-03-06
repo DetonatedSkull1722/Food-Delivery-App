@@ -6,7 +6,7 @@ export const StoreContext = createContext(null);
 const StoreContextProvider = (props) =>{
     
     const [cartItems, setCartItems] =useState({});
-    const url= process.env.BACKENDURL;
+    const url= process.env.VITE_BACKEND_URL;
     const [token, setToken] = useState("");
     const [food_list, setFoodList] = useState([]);
 
