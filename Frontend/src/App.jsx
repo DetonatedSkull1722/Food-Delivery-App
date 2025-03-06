@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Verify from './pages/Verify/Verify'
 import MyOrders from './pages/MyOrders/MyOrders'
-import Navbar from './components/Navbar/navbar'
+import Navbar from './components/Navbar/Navbar'
 
 
 const App = () => {
