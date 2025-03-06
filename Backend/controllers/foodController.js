@@ -1,48 +1,56 @@
+// controllers/foodController.js
 import foodModel from "../models/foodModel.js";
-import fs from "fs";
+// Remove fs as you no longer delete local files
 
-const addFood = async(req, res)=>{
+const addFood = async (req, res) => {
+  // req.file.filename now holds the Firebase URL
+  let image_url = req.file.filename;
+  const food = new foodModel({
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    category: req.body.category,
+    image: image_url,
+  });
 
-    let image_filename = `${req.file.filename}`;
-    const food = new foodModel({
-        name: req.body.name,
-        description:req.body.description,
-        price: req.body.price,
-        category: req.body.category,
-        image: image_filename
-    })
+  try {
+    await food.save();
+    res.json({ success: true, message: "Food added successfully" });
+  } catch (error) {
+    console.log(error);
+    res.json({ message: error.message });
+  }
+};
 
-    try {
-        await food.save();
-        res.json({success: true, message: "Food added successfully"});
-    } catch (error) {
-        console.log(error);
-        res.json({message: error.message});
+const listFood = async (req, res) => {
+  try {
+    const food = await foodModel.find();
+    res.json({ success: true, data: food });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+const removeFood = async (req, res) => {
+  try {
+    const food = await foodModel.findById(req.body.id);
+    if (!food) {
+      return res.json({ success: false, message: "Food item not found" });
     }
-}
+    // Remove image from Firebase Storage
+    // Extract file name from the URL (the part after the last '/')
+    const filename = food.image.split("/").pop();
+    const { bucket } = await import("../config/firebaseConfig.js"); // lazy import if needed
 
-//all food list
-const listFood = async(req, res)=>{
-    try {
-        const food = await foodModel.find();
-        res.json({success:true, data:food});
-    }
-    catch (error) {
-        console.log(error);
-        res.json({success :false, message: error.message});
-    }
-}
+    await bucket.file(filename).delete();
 
-//remove food
-const removeFood = async(req, res)=>{
-    try {
-        const food = await foodModel.findById(req.body.id);
-        fs.unlink(`uploads/${food.image}`,()=>{})
-        await foodModel.findByIdAndDelete(req.body.id);
-        res.json({success:true, message:"Food removed successfully"});
-    } catch (error) {
-        res.json({success:false, message:`Failed! ${error.message}`});
-    }
-}
+    // Remove the food record from MongoDB
+    await foodModel.findByIdAndDelete(req.body.id);
+    res.json({ success: true, message: "Food removed successfully" });
+  } catch (error) {
+    res.json({ success: false, message: `Failed! ${error.message}` });
+  }
+};
 
-export {listFood, addFood, removeFood};
+export { listFood, addFood, removeFood };
