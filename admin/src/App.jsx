@@ -7,9 +7,11 @@ import List from './pages/List/List.jsx'
 import Orders from './pages/Orders/Orders.jsx'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const App = () => {
-  const url = "https://food-delivery-qa8y9l6hf-detonatedskull1722s-projects.vercel.app";
+  const url = process.env.BACKEND_URL;
   return (
     <div>
       <ToastContainer />
