@@ -323,6 +323,6 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 
 ## Contact
 
-**Maintainer**: Your Name (`your.email@example.com`)
+**Maintainer**: Kiran Pillai (`pillaikiran88@gmail.com`)
 
-Project Repository: https://github.com/your-org/foodie-express
+Project Repository: https://github.com/DetonatedSkull1722/foodie-express
